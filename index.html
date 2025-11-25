@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FIT • Desafio — Recriado</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/icon-192.png">
+<link href="styles.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">FIT • Desafio</div>
+  <nav class="tabs" role="navigation" aria-label="Main">
+    <button data-tab="day" class="tab active">Dia Atual</button>
+    <button data-tab="treino" class="tab">Treino</button>
+    <button data-tab="compras" class="tab">Compras</button>
+    <button data-tab="jejum" class="tab">Jejum</button>
+    <button data-tab="nutricao" class="tab">Nutrição</button>
+    <button data-tab="relatorios" class="tab">Relatórios</button>
+  </nav>
+  <div class="actions">
+    <button id="exportBtn">Exportar</button>
+    <button id="importBtn">Importar</button>
+    <input id="importFile" type="file" accept=".json" style="display:none">
+  </div>
+</header>
+
+<main>
+  <section id="day" class="tabview active">
+    <div class="header-row">
+      <h1>Dia Atual</h1>
+      <div id="dateNow" class="date"></div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Checklist</h3>
+        <div id="checklist"></div>
+      </div>
+
+      <div class="card">
+        <h3>Refeições</h3>
+        <div class="meal-form">
+          <input id="mealName" placeholder="Alimento">
+          <input id="mealQty" type="number" value="100" placeholder="g">
+          <input id="mealKcal" type="number" value="0" placeholder="kcal/100g">
+          <button id="addMeal">Adicionar</button>
+        </div>
+        <ul id="meals" class="list"></ul>
+        <div class="summary">Total kcal: <strong id="totalKcal">0</strong></div>
+      </div>
+
+      <div class="card">
+        <h3>Hidratação</h3>
+        <div>Meta: <span id="waterGoal">3000</span> ml</div>
+        <div>Consumido: <span id="waterNow">0</span> ml</div>
+        <div class="water-buttons">
+          <button class="addWater" data-amount="200">+200ml</button>
+          <button class="addWater" data-amount="500">+500ml</button>
+          <button id="resetWater">Reset</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Jejum</h3>
+        <div>Status: <span id="fastStatus">Não em jejum</span></div>
+        <div>Tempo: <span id="fastTimer">00:00:00</span></div>
+        <div class="fast-controls">
+          <select id="fastPreset"><option value="16">16:8</option><option value="18">18:6</option><option value="20">20:4</option><option value="24">24</option></select>
+          <button id="startFast">Iniciar</button>
+          <button id="stopFast">Encerrar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card wide">
+      <h3>Resumo</h3>
+      <div class="res-cards">
+        <div class="res">Calorias: <span id="resKcal">0</span></div>
+        <div class="res">Água: <span id="resWater">0</span> ml</div>
+        <div class="res">Jejum: <span id="resFast">0</span> h</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="treino" class="tabview">
+    <h1>Treinos</h1>
+    <div class="card">
+      <h3>Programa semanal (Casa — halteres, corda, polia)</h3>
+      <div id="programList"></div>
+    </div>
+    <div class="card">
+      <h3>Treino em execução</h3>
+      <div id="activeWorkout"></div>
+    </div>
+    <div class="card">
+      <h3>Histórico de treinos</h3>
+      <ul id="workoutLog"></ul>
+    </div>
+  </section>
+
+  <section id="compras" class="tabview">
+    <h1>Compras</h1>
+    <div class="card">
+      <button id="addPurchase">Adicionar compra</button>
+      <table id="pTable"><thead><tr><th>Item</th><th>Cat</th><th>Qtd</th><th>Preço</th><th>Data</th><th></th></tr></thead><tbody></tbody></table>
+      <div>Total: R$ <span id="totalSpent">0.00</span></div>
+    </div>
+  </section>
+
+  <section id="jejum" class="tabview">
+    <h1>Jejum</h1>
+    <div class="card">
+      <canvas id="jejumChart" width="800" height="200"></canvas>
+      <ul id="fastHistory"></ul>
+    </div>
+  </section>
+
+  <section id="nutricao" class="tabview">
+    <h1>Nutrição</h1>
+    <div class="card">
+      <h3>Banco de alimentos</h3>
+      <div class="food-controls">
+        <input id="foodName" placeholder="Nome do alimento">
+        <input id="foodQty" type="number" value="100" placeholder="g">
+        <input id="foodKcal" type="number" value="0" placeholder="kcal/100g">
+        <button id="addFood">Adicionar</button>
+      </div>
+      <ul id="foodList"></ul>
+    </div>
+  </section>
+
+  <section id="relatorios" class="tabview">
+    <h1>Relatórios</h1>
+    <div class="report-grid">
+      <div class="card"><h4>Jejum (horas / dia)</h4><canvas id="chartFast" width="400" height="200"></canvas></div>
+      <div class="card"><h4>Calorias (dia)</h4><canvas id="chartCal" width="400" height="200"></canvas></div>
+      <div class="card"><h4>Água (ml)</h4><canvas id="chartWater" width="400" height="200"></canvas></div>
+      <div class="card"><h4>Gastos Compras (mês)</h4><canvas id="chartSpend" width="400" height="200"></canvas></div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">Feito para @richardyam1234-dotcom</footer>
+<script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+
+:root{--bg:#080705;--panel:#0f0d0b;--gold:#d4af37;--muted:#cfc6b9;--card:#13110f;--radius:10px}
+*{box-sizing:border-box;font-family:Inter,system-ui,Arial,sans-serif;color:var(--muted)}
+body{margin:0;background:linear-gradient(180deg,#020202,#0b0908);min-height:100vh}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--panel);border-bottom:2px solid rgba(212,175,55,0.06);position:sticky;top:0;z-index:10}
+.brand{color:var(--gold);font-weight:700;font-size:18px}
+.tabs{display:flex;gap:8px}
+.tabs .tab{background:transparent;border:none;color:var(--muted);padding:6px 10px;border-radius:8px;cursor:pointer}
+.tabs .tab.active{color:#fff;background:rgba(212,175,55,0.06)}
+.actions button{margin-left:6px;padding:6px 8px;border-radius:6px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--muted);cursor:pointer}
+main{padding:18px}
+.header-row{display:flex;justify-content:space-between;align-items:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:12px}
+.card{background:var(--card);padding:12px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.6)}
+.wide{grid-column:1/-1}
+.res-cards{display:flex;gap:12px}
+.res{background:rgba(212,175,55,0.04);padding:8px 12px;border-radius:8px;color:var(--muted)}
+.meal-form input{padding:6px;margin-right:6px;border-radius:6px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--muted)}
+.meal-form button{background:var(--gold);border:none;color:#111;padding:6px 10px;border-radius:6px;cursor:pointer}
+.water-buttons button{margin-right:6px;padding:6px 8px;border-radius:6px;background:rgba(212,175,55,0.06);border:none;color:var(--gold);cursor:pointer}
+.table{width:100%;border-collapse:collapse}
+#pTable th,#pTable td{padding:8px;border-bottom:1px solid rgba(255,255,255,0.03);text-align:left}
+.list{list-style:none;padding:0;margin:0}
+.report-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-top:12px}
+.footer{padding:16px;color:var(--muted);text-align:center}
+.program-day{display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:8px;background:rgba(255,255,255,0.02);margin-bottom:8px}
+.runner-box{padding:12px;background:rgba(0,0,0,0.4);border-radius:8px;margin-top:8px}
+@media (max-width:700px){.grid{grid-template-columns:1fr} .tabs{overflow:auto}}
